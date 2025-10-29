@@ -182,3 +182,33 @@ function actualizarAutomovil() {
 }
 const btnActualizar = document.getElementById('btnActualizar');
 btnActualizar.addEventListener('click', actualizarAutomovil);
+
+function eliminarAutomovil() {
+    let numSerie= document.getElementById('txtNumSerie').value.trim();
+    if (numSerie === "") {
+        mostrarMensaje("No se ingresó un Codigo válido.");
+        return;
+    }
+
+    const dbref = refS(db);
+    get(child(dbref, 'Automoviles/' + numSerie)).then((snapshot) => {
+
+        if (snapshot.exists()) {
+            remove(refS(db, 'Automoviles/' + numSerie))
+                .then(() => {
+                    mostrarMensaje("Producto eliminado con éxito.");
+                    limpiarInputs();
+                    Listarproductos();
+                })
+                .catch((error) => {
+                    mostrarMensaje("Ocurrió un error al eliminar el producto: " + error);
+                });
+        } else {
+            limpiarInputs();
+            mostrarMensaje("El producto con ID " + numSerie + " no existe.");
+        }
+    });
+    Listarproductos();
+}
+const btnBorrar = document.getElementById('btnBorrar');
+btnBorrar.addEventListener('click', eliminarAutomovil);
