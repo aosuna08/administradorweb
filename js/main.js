@@ -72,3 +72,86 @@ function insertarProducto() {
         alert("Ocurrio un error");
     });
 }
+
+// codifica el boton de buscar
+// agregar las siguientes funciones
+function limpiarInputs() {
+    document.getElementById('txtNumSerie').value = '';
+    document.getElementById('txtModelo').value = '';
+    document.getElementById('txtMarca').value = '';
+    document.getElementById('txtDescripcion').value = '';
+    document.getElementById('txtUrl').value = '';
+}
+
+function escribirInputs() {
+    document.getElementById('txtModelo').value = modelo;
+    document.getElementById('txtMarca').value = marca;
+    document.getElementById('txtDescripcion').value = descripcion;
+    document.getElementById('txtUrl').value = urlImag;
+}
+
+function buscarProducto() {
+    let numSerie = document.getElementById('txtNumSerie').value.trim();
+    if (numSerie === "") {
+        mostrarMensaje("No se ingresó Num Serie");
+        return;
+    }
+
+    const dbref = ref(db);
+    get(child(dbref, 'Automoviles/' + numSerie)).then((snapshot) => {
+        if (snapshot.exists()) {
+            marca = snapshot.val().marca;
+            modelo = snapshot.val().modelo;
+            descripcion = snapshot.val().descripcion;
+            urlImag = snapshot.val().urlImag;
+            escribirInputs();
+        } else {
+            limpiarInputs();
+            mostrarMensaje("El producto con código " + numSerie + " no existe.");
+        }
+    });
+}
+btnBuscar.addEventListener('click', buscarProducto);
+
+// listar productos
+function Listarproductos() {
+    const dbRef = refS(db, 'Automoviles');
+    const tabla = document.getElementById('tablaProductos');
+    const tbody = tabla.querySelector('tbody');
+    tbody.innerHTML = '';
+
+    onValue(dbRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const childKey = childSnapshot.key;
+
+            const data = childSnapshot.val();
+            var fila = document.createElement('tr');
+
+            var celdaCodigo = document.createElement('td');
+            celdaCodigo.textContent = childKey;
+            fila.appendChild(celdaCodigo);
+
+            var celdaNombre = document.createElement('td');
+            celdaNombre.textContent = data.marca;
+            fila.appendChild(celdaNombre);
+
+            var celdaPrecio = document.createElement('td');
+            celdaPrecio.textContent = data.modelo;
+            fila.appendChild(celdaPrecio);
+
+            var celdaCantidad = document.createElement('td');
+            celdaCantidad.textContent = data.descripcion;
+            fila.appendChild(celdaCantidad);
+
+
+            var celdaImagen = document.createElement('td');
+            var imagen = document.createElement('img');
+            imagen.src = data.urlImag;
+            imagen.width = 100;
+            celdaImagen.appendChild(imagen);
+            fila.appendChild(celdaImagen);
+            tbody.appendChild(fila);
+        });
+    }, { onlyOnce: true });
+}
+document.addEventListener('DOMContentLoaded', Listarproductos)
