@@ -155,3 +155,30 @@ function Listarproductos() {
     }, { onlyOnce: true });
 }
 document.addEventListener('DOMContentLoaded', Listarproductos)
+
+// Se agrego la funcion actualizar
+function actualizarAutomovil() {
+    leerInputs();
+    if (numSerie === "" || marca === "" || modelo === "" || descripcion === "") {
+        mostrarMensaje("Favor de capturar toda la información.");
+        return;
+    }
+
+    alert("actualizar");
+    update(refS(db, 'Automoviles/' + numSerie), {
+        numSerie:numSerie,
+        marca: marca,
+        modelo: modelo,
+        descripcion: descripcion,
+        urlImag: urlImag
+    }).then(() => {
+        mostrarMensaje("Se actualizó con éxito.");
+        limpiarInputs();
+        Listarproductos();
+    }).catch((error) => {
+        mostrarMensaje("Ocurrió un error: " + error);
+    });
+    Listarproductos();
+}
+const btnActualizar = document.getElementById('btnActualizar');
+btnActualizar.addEventListener('click', actualizarAutomovil);
