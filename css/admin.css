@@ -125,3 +125,24 @@ button#btnBorrar:hover {
     background-color: #d9534f; 
     color: #ffffff;
 }
+
+li{
+    display: inline;
+    margin: auto;
+    padding: 10px 30px;
+}
+
+li > a{
+    text-decoration: none;
+    color: #9a8cb8;
+    font-weight: bold;
+    transition: 0.2s ease-in-out;
+}
+
+li > a:hover{
+    background-color: #545478; 
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px 15px;
+    animation-delay: 0.2s;
+}

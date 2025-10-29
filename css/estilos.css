@@ -1,0 +1,80 @@
+/* SELECTOR UNIVERSAL */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+/* SELECTOR DE TIPO */
+body{
+    background-color: #dde2e4;;
+    color: #9a8cb8;
+    font-size: 1.6rem;
+    border-radius: 25px;
+}
+
+ul{
+    list-style: none;
+    text-align: center;
+    padding: 1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}
+
+li{
+    display: inline;
+    margin: 1em;
+    padding: 10px 30px;
+}
+
+li > a{
+    text-decoration: none;
+    color: #9a8cb8;
+    font-weight: bold;
+    transition: 0.2s ease-in-out;
+}
+
+li > a:hover{
+    background-color: #545478; 
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px 15px;
+    animation-delay: 0.2s;
+}
+
+/* SELECTOR DE ID */
+#fotoAutor{
+    margin: 4rem;
+    width: 300px; 
+    height: 400px;
+}
+
+#encabezado{
+    width: 90%;
+    height: auto;
+    background-color: #ebebeb;
+    margin: 1rem auto;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: normal;
+    font-size: 1.7rem;
+    padding: 1.5rem 0 2.5rem 0;
+    border-radius: 0.5rem;
+    box-shadow: 0px 2px 6px 0px #371e3d;
+}
+
+/* SELECTOR DE CLASE */
+.footer {
+    margin-top: 1em;
+    margin-bottom: 0;
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
