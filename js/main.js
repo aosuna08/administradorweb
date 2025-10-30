@@ -1,3 +1,5 @@
+import { databaseService } from "./database.js";
+import { storageService } from "./storage.js";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -14,7 +16,37 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app)
+export const db = getDatabase(app)
+
+// Inicialización del widget de Cloudinary
+const initCloudinaryWidget = () => {
+    const widget = storageService.initUploadWidget((result) => {
+        if (result.success) {
+            txtUrl.value = result.url;
+            showMessage('mensaje', result.message);
+        } else {
+            showMessage('mensaje', result.message, true);
+        }
+    });
+
+    uploadButton.addEventListener('click', () => widget.open());
+    
+    // Manejo alternativo para el input de tipo file
+    imageInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        if (file) {
+            const result = await storageService.uploadImage(file);
+            if (result.success) {
+                txtUrl.value = result.url;
+                showMessage('mensaje', result.message);
+            } else {
+                showMessage('mensaje', result.message, true);
+            }
+        }
+    });
+};
+
 
 // declarar unas variables global
 var numSerie = 0;
@@ -41,10 +73,6 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     },1000);
 }
-
-// agregar producto a la base de datos
-const btnAgregar = document.getElementById('btnAgregar');
-btnAgregar.addEventListener('click', insertarProducto);
 
 function insertarProducto() {
     alert("ingrese a add db");
@@ -111,7 +139,6 @@ function buscarProducto() {
         }
     });
 }
-btnBuscar.addEventListener('click', buscarProducto);
 
 // listar productos
 function Listarproductos() {
@@ -154,7 +181,6 @@ function Listarproductos() {
         });
     }, { onlyOnce: true });
 }
-document.addEventListener('DOMContentLoaded', Listarproductos)
 
 // Se agrego la funcion actualizar
 function actualizarAutomovil() {
@@ -180,8 +206,7 @@ function actualizarAutomovil() {
     });
     Listarproductos();
 }
-const btnActualizar = document.getElementById('btnActualizar');
-btnActualizar.addEventListener('click', actualizarAutomovil);
+
 
 function eliminarAutomovil() {
     let numSerie= document.getElementById('txtNumSerie').value.trim();
@@ -210,5 +235,28 @@ function eliminarAutomovil() {
     });
     Listarproductos();
 }
+
+const btnBuscar = document.getElementById('btnBuscar')
 const btnBorrar = document.getElementById('btnBorrar');
-btnBorrar.addEventListener('click', eliminarAutomovil);
+const btnActualizar = document.getElementById('btnActualizar');
+const btnAgregar = document.getElementById('btnAgregar');
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    initCloudinaryWidget();
+    Listarproductos();
+
+    // Asignar manejadores de eventos
+    btnAgregar.addEventListener('click', insertarProducto);
+    btnBuscar.addEventListener('click', buscarProducto);
+    btnActualizar.addEventListener('click', actualizarAutomovil);
+    btnBorrar.addEventListener('click', eliminarAutomovil);
+
+    // Limpiar formulario al hacer reset
+    const resetButton = document.querySelector('button[type="reset"]');
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            currentProductId = null;
+        });
+    }
+});
