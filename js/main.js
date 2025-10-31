@@ -238,8 +238,13 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
     }
 });
 
+
+// Administrador
 document.addEventListener('DOMContentLoaded', Listarproductos);
 btnBuscar.addEventListener('click', buscarProducto);
 btnAgregar.addEventListener('click', insertarProducto);
 btnActualizar.addEventListener('click', actualizarAutomovil);
 btnBorrar.addEventListener('click', eliminarAutomovil);
+
+// Html automoviles
+document.addEventListener('DOMContentLoaded', mostrarAutomoviles)
