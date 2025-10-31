@@ -44,7 +44,7 @@ function mostrarMensaje(mensaje) {
 }
 
 function insertarProducto() {
-    alert("ingrese a add db");
+    //alert("ingrese a add db");
     leerInputs();
     //validar
     if(numSerie === "" || marca === "" || modelo === "" || descripcion === "") {
@@ -116,6 +116,7 @@ function Listarproductos() {
     tbody.innerHTML = '';
 
     onValue(dbRef, (snapshot) => {
+        tbody.innerHTML = ''
         snapshot.forEach((childSnapshot) => {
             const childKey = childSnapshot.key;
 
@@ -146,7 +147,7 @@ function Listarproductos() {
             fila.appendChild(celdaImagen);
             tbody.appendChild(fila);
         });
-    }, { onlyOnce: true });
+    });
 }
 
 //funcion actualizar
