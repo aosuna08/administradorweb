@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+/* SELECTOR UNIVERSAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+/* SELECTOR DE TIPO */
+body{
+    margin-top: 13rem;
+    background-color: #3b8d86;
+    color: white;
+    font-size: 1.6rem;
+    border-radius: 25px;
+}
+
+hr{
+    border: none;
+    font-size: 4px;
+    background-color: black;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 3);
+    margin: 2rem 0
+}
+
+/* SELECTOR DE ID */
+#contenedor{
+    width: auto;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    margin: 4rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0px 2px 6px 0px #371e3d;
+}
+
+/* SELECTOR DE CLASE */
+.contenedores {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    background-color: rgb(88, 121, 120);
+    padding: 10px;
+    border: 2px solid black;
+    width: 90%;
+}
+
+.imagen{
+    border-radius: 2rem;
+}
+
+.img{
+    background-color: white;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: 50%;
+    width: 100%;
+}
+
+.modelo, .descripcion, h2 {
+    font-family: "Abril Fatface", serif;
+}
+
+.modelo{
+    padding: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    border: transparent;
+    font-weight: bold;
+    color: #000000;
+}
+
+.descripcion{
+    flex: 1;
+    font-weight: 400;
+    text-align: justify;
+    font-size: 1.7rem;
+    padding: 0.7rem 2.1rem;
+    font-size: 90%;
+    color: black;
+    overflow-y: hidden;
+}
+
+.boton{
+    border: none;
+    outline: none;
+    display: inline-block;
+    padding: 0.8px;
+    border-radius: 4px;
+    color: black;
+    background-color: white;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    font-size: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s ease-in-out;
+}
+
+.boton:hover{
+    background-color: rgba(0, 94, 93, 0.63);
+    color: white;
+    font-weight: bold;
+    animation-delay: 0.3s;
+}
+
+.footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.tarjeta{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(149, 183, 176);
+    box-shadow: 0 4px 8px 0 rgb(44, 41, 37);
+    overflow: hidden;
+    width: 400px;
+    height: 500px;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    border: 2px solid;
+    border-radius: 10px;
+    border: transparent;
+    margin-top: 15px;
+}
+
+.logoAuto{
+    height: 250px;
+    width: 250px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* menu */
+.container {
+    max-width: 100%;
+    background-color: black;
+    margin: 0 auto;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 20px;
+    color: white;
+    display: block;
+}
+
+.menu .navbar ul li a:hover {
+    color: darkcyan;
+}
+
+#menu {
+    display: none;
+}
+
+.menu-icon {
+    width: 25px;
+}
+
+.menu label{
+    cursor: pointer;
+    display: none;
+}
+
+p {
+    text-align: center;
+    z-index: 1000;
+}
+
+li, a{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+@media(max-width:600px) {
+    .menu{
+        padding: 30px;
+    }
+
+    .menu label{
+        display: initial;
+    }
+
+    .menu .navbar{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: rgb(5, 5, 4);
+        display: none;
+    }
+
+    .menu .navbar ul li {
+        width: 100%;
+    }
+
+    #menu:checked~.navbar{
+        display: initial;
+    }
+}

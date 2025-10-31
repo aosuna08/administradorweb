@@ -44,7 +44,7 @@ function mostrarMensaje(mensaje) {
 }
 
 function insertarProducto() {
-    //alert("ingrese a add db");
+    //+alert("ingrese a add db");
     leerInputs();
     //validar
     if(numSerie === "" || marca === "" || modelo === "" || descripcion === "") {
