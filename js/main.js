@@ -23,6 +23,10 @@ var modelo = "";
 var descripcion = "";
 var urlImag = "";
 
+const btnAgregar = document.getElementById('btnAgregar');
+const btnBuscar = document.getElementById('btnBuscar');
+const btnActualizar = document.getElementById('btnActualizar');
+const btnBorrar = document.getElementById('btnBorrar');
 
 // funciones
 function leerInputs() {
@@ -41,10 +45,6 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     },1000);
 }
-
-// agregar producto a la base de datos
-const btnAgregar = document.getElementById('btnAgregar');
-btnAgregar.addEventListener('click', insertarProducto);
 
 function insertarProducto() {
     alert("ingrese a add db");
@@ -97,7 +97,7 @@ function buscarProducto() {
         return;
     }
 
-    const dbref = ref(db);
+    const dbref = refS(db);
     get(child(dbref, 'Automoviles/' + numSerie)).then((snapshot) => {
         if (snapshot.exists()) {
             marca = snapshot.val().marca;
@@ -111,7 +111,6 @@ function buscarProducto() {
         }
     });
 }
-btnBuscar.addEventListener('click', buscarProducto);
 
 // listar productos
 function Listarproductos() {
@@ -154,7 +153,6 @@ function Listarproductos() {
         });
     }, { onlyOnce: true });
 }
-document.addEventListener('DOMContentLoaded', Listarproductos)
 
 // Se agrego la funcion actualizar
 function actualizarAutomovil() {
@@ -180,8 +178,6 @@ function actualizarAutomovil() {
     });
     Listarproductos();
 }
-const btnActualizar = document.getElementById('btnActualizar');
-btnActualizar.addEventListener('click', actualizarAutomovil);
 
 function eliminarAutomovil() {
     let numSerie= document.getElementById('txtNumSerie').value.trim();
@@ -210,5 +206,9 @@ function eliminarAutomovil() {
     });
     Listarproductos();
 }
-const btnBorrar = document.getElementById('btnBorrar');
+
+document.addEventListener('DOMContentLoaded', Listarproductos);
+btnBuscar.addEventListener('click', buscarProducto);
+btnAgregar.addEventListener('click', insertarProducto);
+btnActualizar.addEventListener('click', actualizarAutomovil);
 btnBorrar.addEventListener('click', eliminarAutomovil);
