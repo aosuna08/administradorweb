@@ -23,7 +23,7 @@ label {
     color: #6d6875; /* Morado oscuro para contraste en las etiquetas */
 }
 
-input[type="text"] {
+input[type="text"], .marcas {
     width: 90%;
     padding: 10px;
     border: 1px solid #8e9cc6; /* Borde azul pastel */
