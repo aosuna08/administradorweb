@@ -1,7 +1,4 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 import { getDatabase, onValue, ref as refS, set, child, get, update, remove }from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,13 +13,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app)
 
-// declarar unas variables global
 var numSerie = 0;
 var marca = "";
 var modelo = "";
 var descripcion = "";
 var urlImag = "";
 
+const txtUrl = document.getElementById('txtUrl')
+const btnAgregar = document.getElementById('btnAgregar');
+const btnBuscar = document.getElementById('btnBuscar');
+const btnActualizar = document.getElementById('btnActualizar');
+const btnBorrar = document.getElementById('btnBorrar');
 
 // funciones
 function leerInputs() {
@@ -41,10 +42,6 @@ function mostrarMensaje(mensaje) {
         mensajeElement.style.display = 'none';
     },1000);
 }
-
-// agregar producto a la base de datos
-const btnAgregar = document.getElementById('btnAgregar');
-btnAgregar.addEventListener('click', insertarProducto);
 
 function insertarProducto() {
     alert("ingrese a add db");
@@ -74,7 +71,6 @@ function insertarProducto() {
 }
 
 // codifica el boton de buscar
-// agregar las siguientes funciones
 function limpiarInputs() {
     document.getElementById('txtNumSerie').value = '';
     document.getElementById('txtModelo').value = '';
@@ -97,7 +93,7 @@ function buscarProducto() {
         return;
     }
 
-    const dbref = ref(db);
+    const dbref = refS(db);
     get(child(dbref, 'Automoviles/' + numSerie)).then((snapshot) => {
         if (snapshot.exists()) {
             marca = snapshot.val().marca;
@@ -111,7 +107,6 @@ function buscarProducto() {
         }
     });
 }
-btnBuscar.addEventListener('click', buscarProducto);
 
 // listar productos
 function Listarproductos() {
@@ -143,7 +138,6 @@ function Listarproductos() {
             celdaCantidad.textContent = data.descripcion;
             fila.appendChild(celdaCantidad);
 
-
             var celdaImagen = document.createElement('td');
             var imagen = document.createElement('img');
             imagen.src = data.urlImag;
@@ -154,9 +148,8 @@ function Listarproductos() {
         });
     }, { onlyOnce: true });
 }
-document.addEventListener('DOMContentLoaded', Listarproductos)
 
-// Se agrego la funcion actualizar
+//funcion actualizar
 function actualizarAutomovil() {
     leerInputs();
     if (numSerie === "" || marca === "" || modelo === "" || descripcion === "") {
@@ -180,9 +173,8 @@ function actualizarAutomovil() {
     });
     Listarproductos();
 }
-const btnActualizar = document.getElementById('btnActualizar');
-btnActualizar.addEventListener('click', actualizarAutomovil);
 
+// funcion para eliminar
 function eliminarAutomovil() {
     let numSerie= document.getElementById('txtNumSerie').value.trim();
     if (numSerie === "") {
@@ -210,5 +202,43 @@ function eliminarAutomovil() {
     });
     Listarproductos();
 }
-const btnBorrar = document.getElementById('btnBorrar');
+
+// SUBIR IMAGEN A CLOUDINARY
+const cloudName = "dwfwgazbv"; 
+const uploadPreset = "automoviles"; 
+
+document.getElementById("uploadBtn").addEventListener("click", async () => {
+    const imageInput = document.getElementById("imageInput");
+    const file = imageInput.files[0];
+
+    if (!file) {
+        alert("Selecciona una imagen primero.");
+        return;
+    }
+
+    // Construimos el FormData
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+
+    try {
+        // Subimos a Cloudinary
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData
+        });
+
+        const data = await response.json();
+        console.log("Imagen subida:", data);
+
+        txtUrl.value = data.secure_url;
+    } catch (error) {
+        console.error("Error al subir imagen:", error);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', Listarproductos);
+btnBuscar.addEventListener('click', buscarProducto);
+btnAgregar.addEventListener('click', insertarProducto);
+btnActualizar.addEventListener('click', actualizarAutomovil);
 btnBorrar.addEventListener('click', eliminarAutomovil);
